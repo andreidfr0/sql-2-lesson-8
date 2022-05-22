@@ -1,0 +1,33 @@
+$ sudo apt-get install postgresql postgresql-contrib
+## методичка  9.3 - rel201309
+$ systemctl status postgresql
+## ● postgresql.service - PostgreSQL RDBMS
+##     Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor pr>
+##     Active: active (exited) since Sun 2022-05-22 19:57:11 +03; 50min ago
+##   Main PID: 5203 (code=exited, status=0/SUCCESS)
+##      Tasks: 0 (limit: 9347)
+##     Memory: 0B
+##     CGroup: /system.slice/postgresql.service
+## ---
+
+$ sudo pg_createcluster 12 main --start
+# sudo pg_ctlcluster 12 main stop|start|restart
+
+# info
+# sudo pg_lsclusters
+## Ver Cluster Port Status Owner    Data directory              Log file
+## 12  main    5432 online postgres /var/lib/postgresql/12/main /var/log/postgresql/postgresql-12-main.log
+## ---
+
+$ sudo -u postgres psql -c "SELECT version();"
+version PostgreSQL 12.10 (Ubuntu 12.10-0ubuntu0.20.04.1) on x86_64-pc-linux-gnu
+
+$ sudo -i -u postgres
+$ psql
+postgres=# \q
+
+$ createuser --interactive
+Enter name of role to add: pgadmin
+Shall the new role be a superuser? (y/n) y
+
+$ echo "host all pgadmin 127.0.0.1/32 md5" >> /etc/postgresql/12/main/pg_hba.conf
